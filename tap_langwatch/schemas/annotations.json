@@ -1,0 +1,89 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "projectId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "traceId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "userId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "email": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "comment": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "isThumbsUp": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "scoreOptions": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true
+    },
+    "expectedOutput": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "anchorKind": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "anchorId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "anchorPath": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    }
+  }
+}

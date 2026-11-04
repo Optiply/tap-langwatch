@@ -1,0 +1,193 @@
+{
+  "type": "object",
+  "properties": {
+    "trace_id": {
+      "type": "string"
+    },
+    "span_id": {
+      "type": "string"
+    },
+    "parent_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "vendor": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "error": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "has_error": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "message": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "stacktrace": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "timestamps": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "started_at": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "first_token_at": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "finished_at": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "ignore_timestamps_on_write": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    },
+    "metrics": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "prompt_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "completion_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "reasoning_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "cache_read_input_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "cache_creation_input_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tokens_estimated": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "cost": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "params": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true
+    },
+    "contexts": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "additionalProperties": true,
+        "properties": {
+          "document_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "chunk_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "content": {}
+        }
+      }
+    }
+  }
+}

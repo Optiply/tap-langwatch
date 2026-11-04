@@ -1,0 +1,186 @@
+{
+  "type": "object",
+  "properties": {
+    "trace_id": {
+      "type": "string"
+    },
+    "evaluation_id": {
+      "type": "string"
+    },
+    "evaluator_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "span_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "is_guardrail": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "evaluation_thread_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "passed": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "score": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "label": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "details": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "inputs": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true
+    },
+    "error": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "has_error": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "message": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "stacktrace": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "retries": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "attempts": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "last_attempt_error": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "timestamps": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "ignore_timestamps_on_write": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "inserted_at": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "started_at": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "finished_at": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "updated_at": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "last_attempt_at": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "next_attempt_at": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

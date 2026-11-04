@@ -1,0 +1,26 @@
+[project]
+name = "tap-langwatch"
+version = "0.1.0"
+description = "Singer tap for the LangWatch API (traces, spans, evaluations, annotations), built with the HotGlue Singer SDK."
+authors = [{ name = "Optiply" }]
+license = "Apache-2.0"
+readme = "README.md"
+keywords = ["ELT", "LangWatch", "Singer"]
+requires-python = ">=3.10,<3.12"
+dependencies = [
+    "hotglue-singer-sdk>=1.0.51,<2",
+    "requests>=2.25.1,<3",
+]
+
+[project.scripts]
+tap-langwatch = "tap_langwatch.tap:TapLangWatch.cli"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.poetry]
+packages = [{ include = "tap_langwatch" }]
+
+[build-system]
+requires = ["poetry-core>=2.0,<3"]
+build-backend = "poetry.core.masonry.api"

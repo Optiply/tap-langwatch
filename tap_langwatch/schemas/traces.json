@@ -1,0 +1,456 @@
+{
+  "type": "object",
+  "properties": {
+    "trace_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "timestamps": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "started_at": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "inserted_at": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "updated_at": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      }
+    },
+    "metadata": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "thread_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "user_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "customer_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "labels": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "topic_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "subtopic_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sdk_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sdk_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sdk_language": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "telemetry_sdk_language": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "telemetry_sdk_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "telemetry_sdk_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "prompt_ids": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "prompt_version_ids": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "input": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "value": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "output": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "value": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "expected_output": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "value": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "contexts": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "additionalProperties": true,
+        "properties": {
+          "document_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "chunk_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "content": {}
+        }
+      }
+    },
+    "metrics": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "first_token_ms": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "total_time_ms": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "prompt_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "completion_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "reasoning_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "cache_read_input_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "cache_creation_input_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "cache_creation_5m_input_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "cache_creation_1h_input_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "context_size_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "total_cost": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tokens_estimated": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    },
+    "error": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "has_error": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "message": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "stacktrace": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "events": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "additionalProperties": true,
+        "properties": {
+          "event_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "event_type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "project_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "trace_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "metrics": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": true
+          },
+          "event_details": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": true
+          },
+          "timestamps": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": true,
+            "properties": {
+              "started_at": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "inserted_at": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "updated_at": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "privacy": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "droppedCategories": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "redacted_by_visibility_window": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "platformUrl": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}
