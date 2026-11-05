@@ -14,6 +14,7 @@ import requests
 from hotglue_etl_exceptions import InvalidCredentialsError
 from hotglue_singer_sdk.exceptions import FatalAPIError, RetriableAPIError
 from hotglue_singer_sdk.streams import RESTStream
+from hotglue_singer_sdk.helpers._network import giveup_oserror_not_transient_network
 
 SCHEMAS_DIR = Path(__file__).parent / "schemas"
 DEFAULT_API_URL = "https://app.langwatch.ai"
@@ -109,11 +110,24 @@ class LangWatchStream(RESTStream):
             f"{self._error_path(response)}: {response.text[:ERROR_BODY_LIMIT]}"
         )
 
+    # LangWatch answers 503 `clickhouse_overloaded` ("retry in a few seconds") and Cloudflare 524
+    # under load (job r4he1pua, 2026-11-05). The SDK's default full jitter turned the schedule
+    # into 0.2-10 s waits, so the decorator is rebuilt without jitter: 5, 10, 20, 40, 80, 120, 120 s.
     def backoff_wait_generator(self):
-        return backoff.expo(factor=2, max_value=60)
+        return backoff.expo(base=2, factor=5, max_value=120)
 
     def backoff_max_tries(self) -> int:
-        return 5
+        return 8
+
+    def request_decorator(self, func):
+        return backoff.on_exception(
+            self.backoff_wait_generator,
+            self.backoff_exceptions(),
+            max_tries=self.backoff_max_tries,
+            on_backoff=self.backoff_handler,
+            giveup=giveup_oserror_not_transient_network,
+            jitter=None,
+        )(func)
 
     def json_body(self, response: requests.Response) -> dict[str, Any]:
         try:

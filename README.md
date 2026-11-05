@@ -42,7 +42,7 @@ Not extracted:
   - 401 raises `InvalidCredentialsError` and is not retried.
   - 400, 403, 404, 422 and other 4xx responses are fatal; 403 names the stream whose permission is missing.
   - 429 waits for `Retry-After` (capped at 120 s) and then backs off.
-  - 429, 5xx and network errors are retried up to 5 attempts, with exponential backoff, full jitter and at most 60 s between tries.
+  - 429, 5xx (incl. LangWatch 503 `clickhouse_overloaded` and Cloudflare 524) and network errors are retried up to 8 attempts, waiting 5, 10, 20, 40, 80, 120, 120 s (no jitter; ~6.5 min in total) before giving up.
   - Requests time out after 10 s to connect and 300 s to read.
 - **Span pages:** LangWatch answers 500 to `includeSpans` pages of 50 traces and ~150 MB for 10, so span-inclusive searches use `min(page_size, 10)` (`SPAN_PAGE_SIZE`). Expect roughly one 10 s request per 10 traces when `spans` is selected.
 - **Rate limits:** LangWatch documents none for these endpoints; 429s are handled by the retry policy above.

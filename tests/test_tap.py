@@ -406,11 +406,19 @@ def test_429_without_retry_after_retries(api):
     assert len(api.calls_to(SEARCH)) == 2
 
 
-def test_5xx_retries_are_bounded(api):
-    api.add(SEARCH, (503, {"error": "down"}, {}))
+def test_5xx_retries_are_bounded_with_real_waits(api):
+    """LangWatch 503 clickhouse_overloaded needs seconds between tries, not jittered sub-second waits."""
+    api.add(SEARCH, (503, {"code": "clickhouse_overloaded"}, {}))
     with pytest.raises(Exception):
         run_tap({"traces"})
-    assert len(api.calls_to(SEARCH)) == 5
+    assert len(api.calls_to(SEARCH)) == 8
+    assert api.sleeps == [5, 10, 20, 40, 80, 120, 120]
+
+
+def test_503_recovers_after_a_few_tries(api):
+    api.add(SEARCH, (503, {}, {}), (524, b"<html>", {}), page([]))
+    run_tap({"traces"})
+    assert len(api.calls_to(SEARCH)) == 3 and api.sleeps == [5, 10]
 
 
 def test_non_json_response_fails(api):
