@@ -42,10 +42,9 @@
     },
     "scoreOptions": {
       "type": [
-        "object",
+        "string",
         "null"
-      ],
-      "additionalProperties": true
+      ]
     },
     "expectedOutput": {
       "type": [

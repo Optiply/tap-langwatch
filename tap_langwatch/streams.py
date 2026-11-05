@@ -44,6 +44,7 @@ class TracesStream(LangWatchStream):
     primary_keys = ["trace_id"]
     replication_key = "updated_at"
     is_sorted = False
+    json_fields = ("metadata", "timestamps", "input", "output", "expected_output", "contexts", "metrics", "error", "events", "privacy")
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
@@ -115,7 +116,7 @@ class TracesStream(LangWatchStream):
         if not trace_id or not isinstance(updated_at, int):
             raise FatalAPIError(f"LangWatch trace {trace_id!r} has no trace_id or timestamps.updated_at.")
         row["updated_at"] = epoch_ms_to_iso(updated_at)
-        return row
+        return super().post_process(row, context)
 
     def get_child_context(self, record: dict, context: dict | None) -> dict:
         return context or {}
@@ -155,6 +156,7 @@ class SpansStream(_TraceChildStream):
     primary_keys = ["trace_id", "span_id"]
     context_key = "spans"
     id_key = "span_id"
+    json_fields = ("error", "timestamps", "metrics", "params", "contexts")
 
     def post_process(self, row: dict, context: dict | None = None) -> dict:
         row.pop("input", None)
@@ -166,7 +168,7 @@ class SpansStream(_TraceChildStream):
                 for key, value in params.items()
                 if (keep := SPAN_PARAMS_KEPT.get(key, set())) is None or keep
             }
-        return row
+        return super().post_process(row, context)
 
 
 class EvaluationsStream(_TraceChildStream):
@@ -176,6 +178,7 @@ class EvaluationsStream(_TraceChildStream):
     primary_keys = ["trace_id", "evaluation_id"]
     context_key = "evaluations"
     id_key = "evaluation_id"
+    json_fields = ("inputs", "error", "timestamps")
 
 
 class AnnotationsStream(LangWatchStream):
@@ -185,6 +188,7 @@ class AnnotationsStream(LangWatchStream):
     name = "annotations"
     path = "/api/v1/annotations"
     primary_keys = ["id"]
+    json_fields = ("scoreOptions",)
 
     def parse_response(self, response: requests.Response) -> Iterable[dict]:
         body = self.json_body(response)

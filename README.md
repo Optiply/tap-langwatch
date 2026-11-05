@@ -56,4 +56,6 @@ uv run tap-langwatch --config config.json --discover > catalog.json
 uv run tap-langwatch --config config.json --catalog catalog.json
 ```
 
-The JSON schemas in `tap_langwatch/schemas/` follow the trace, span, evaluation and annotation shapes in LangWatch's open-source contract (`modules/trace/contract/src/trace-format.schemas.ts`, `GET /api/v1/annotations` OpenAPI). Every field is nullable; `metadata`, `params`, `scoreOptions` and typed `input`/`output` values pass through unchanged.
+The JSON schemas in `tap_langwatch/schemas/` follow the trace, span, evaluation and annotation shapes in LangWatch's open-source contract (`modules/trace/contract/src/trace-format.schemas.ts`, `GET /api/v1/annotations` OpenAPI). Every field is nullable. Nested objects and arrays (`metadata`, `timestamps`, `metrics`, `error`, `input`/`output`, `events`, `contexts`, span `params`, evaluation `inputs`, annotation `scoreOptions`) are emitted as **JSON text** (`json_fields` on each stream, schema type `string`): Hotglue's CSV stage writes Python reprs for real objects, which BigQuery cannot parse. Read them with `JSON_EXTRACT`/`PARSE_JSON`.
+
+Upserts are the target's job: the tap declares the primary keys (`trace_id`; `trace_id, span_id`; `trace_id, evaluation_id`; `id`), and Hotglue's target-bigquery applies them only with `"replication_method": "incremental"` (default `append`); see https://docs.hotglue.com/connectors/bigquery.

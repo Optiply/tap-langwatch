@@ -175,8 +175,27 @@ def test_traces_first_run_requests_updated_window_from_start_date(api):
     (row,) = records(messages, "traces")
     assert row["updated_at"] == "2024-01-01T00:00:05.000Z"
     assert "spans" not in row and "evaluations" not in row
-    assert row["metadata"]["custom"] == "y"
+    assert json.loads(row["metadata"])["custom"] == "y"
+    assert json.loads(row["timestamps"])["updated_at"] == START_MS + 5000
+    assert row["error"] is None
     assert last_state(messages)["bookmarks"]["traces"]["replication_key_value"] == "2024-01-01T00:00:05.000Z"
+
+
+def test_nested_fields_are_json_text_not_python_repr(api):
+    """Hotglue's CSV stage writes str(value); only a JSON string survives it for BigQuery."""
+    row = trace("t1", START_MS + 1000, spans=[span("t1", "s1", error={"has_error": True, "message": "it's \"quoted\""})], evaluations=[evaluation("e1", inputs={"q": None})])
+    row["metadata"]["labels"] = ["a", "ü"]
+    api.add(SEARCH, page([row]))
+    messages = run_tap({"traces", "spans", "evaluations"})
+    (tr,) = records(messages, "traces")
+    (sp,) = records(messages, "spans")
+    (ev,) = records(messages, "evaluations")
+    for value in (tr["metadata"], tr["metrics"], tr["input"], sp["error"], sp["timestamps"], ev["inputs"], ev["timestamps"]):
+        assert isinstance(value, str) and "'" not in value.replace("it's", "")
+        json.loads(value)
+    assert json.loads(tr["metadata"])["labels"] == ["a", "ü"]
+    assert json.loads(sp["error"]) == {"has_error": True, "message": "it's \"quoted\""}
+    assert json.loads(ev["inputs"]) == {"q": None}
 
 
 def test_traces_follow_scroll_until_absent_and_bookmark_is_max_delivered(api):
@@ -313,7 +332,7 @@ def test_span_content_is_pruned_but_tool_and_llm_facts_stay(api):
     }
     api.add(SEARCH, page([trace("t1", START_MS + 1000, spans=[span("t1", "s1", params=params), span("t1", "s2", params=None)])]))
     (slim, no_params) = records(run_tap({"spans"}), "spans")
-    assert slim["params"] == {
+    assert json.loads(slim["params"]) == {
         "llm": {"provider": "openai", "finish_reason": "stop"},
         "gen_ai": {"operation": "chat", "usage": {"input_tokens": 1}},
         "tool": {"name": "execute_secure_sql", "description": "runs sql"},
@@ -346,7 +365,7 @@ def test_annotations_full_table(api):
     messages = run_tap({"annotations"})
     (call,) = api.calls_to(ANNOTATIONS)
     assert call.method == "GET" and call.headers["X-Auth-Token"] == "sk-lw-test"
-    assert records(messages, "annotations") == rows
+    assert records(messages, "annotations") == [{**rows[0], "scoreOptions": '{"quality":{"value":"5"}}'}]
     assert "replication_key_value" not in last_state(messages)["bookmarks"].get("annotations", {})
 
 

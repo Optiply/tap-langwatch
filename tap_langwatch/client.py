@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -36,6 +37,16 @@ def iso_to_epoch_ms(value: str) -> int:
 
 class LangWatchStream(RESTStream):
     """LangWatch REST endpoint authenticated with the project API key (`X-Auth-Token`)."""
+
+    #: Nested fields emitted as JSON text (schema type string): Hotglue's CSV stage would
+    #: otherwise write Python reprs, which BigQuery cannot parse.
+    json_fields: tuple[str, ...] = ()
+
+    def post_process(self, row: dict, context: dict | None = None) -> dict:
+        for key in self.json_fields:
+            if row.get(key) is not None:
+                row[key] = json.dumps(row[key], ensure_ascii=False, separators=(",", ":"))
+        return row
 
     @property
     def url_base(self) -> str:

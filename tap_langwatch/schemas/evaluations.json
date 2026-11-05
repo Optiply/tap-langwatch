@@ -75,43 +75,15 @@
     },
     "inputs": {
       "type": [
-        "object",
+        "string",
         "null"
-      ],
-      "additionalProperties": true
+      ]
     },
     "error": {
       "type": [
-        "object",
+        "string",
         "null"
-      ],
-      "additionalProperties": true,
-      "properties": {
-        "has_error": {
-          "type": [
-            "boolean",
-            "null"
-          ]
-        },
-        "message": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "stacktrace": {
-          "type": [
-            "array",
-            "null"
-          ],
-          "items": {
-            "type": [
-              "string",
-              "null"
-            ]
-          }
-        }
-      }
+      ]
     },
     "retries": {
       "type": [
@@ -133,54 +105,9 @@
     },
     "timestamps": {
       "type": [
-        "object",
+        "string",
         "null"
-      ],
-      "additionalProperties": true,
-      "properties": {
-        "ignore_timestamps_on_write": {
-          "type": [
-            "boolean",
-            "null"
-          ]
-        },
-        "inserted_at": {
-          "type": [
-            "integer",
-            "null"
-          ]
-        },
-        "started_at": {
-          "type": [
-            "integer",
-            "null"
-          ]
-        },
-        "finished_at": {
-          "type": [
-            "integer",
-            "null"
-          ]
-        },
-        "updated_at": {
-          "type": [
-            "integer",
-            "null"
-          ]
-        },
-        "last_attempt_at": {
-          "type": [
-            "integer",
-            "null"
-          ]
-        },
-        "next_attempt_at": {
-          "type": [
-            "integer",
-            "null"
-          ]
-        }
-      }
+      ]
     }
   }
 }
